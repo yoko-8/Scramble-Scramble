@@ -29,5 +29,3 @@ I don't think I could have made a better decision in my journey to improve at ga
 All that aside, there are definitely things I feel I could have done better. I wish I had documented my game development process better, and I'm certain there's a lot of stuff I could have written more efficiently. A lot of game mechanics I wanted to put in (i.e. power-ups, more enemy types, more waves of enemies) were cut out as a result.
 
 Overall this was a tremendously positive experience for me, and I hope you will have fun playing my game!
-
-ALSO: big thanks to Gruber! All tracks in this game were taken from "Pico-8 Tunes Vol.2."
