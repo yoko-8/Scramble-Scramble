@@ -1,10 +1,10 @@
 # Scramble-Scramble
-This is the codebase for Scramble, Scramble!! a videogame programmed in Lua for the Pico-8 game engine.
+This is the codebase for *Scramble, Scramble!!* a videogame programmed in Lua for the Pico-8 game engine.
 
 ![me](https://github.com/yoko-8/Scramble-Scramble/blob/main/gameplay.gif)
 
 ## Usage
-Scramble, Scramble!! can be played in browser here: https://yoko8.itch.io/scramble-scramble
+*Scramble, Scramble!!* can be played in browser here: https://yoko8.itch.io/scramble-scramble
 
 Alternatively, download the Pico-8 cart (.png) and load it into the Pico-8 engine.
 
@@ -18,7 +18,7 @@ Alternatively, download the Pico-8 cart (.png) and load it into the Pico-8 engin
 * Press Z to throw the Iron Egg
 
 ## Project Description
-This game was created as a submission to the Basic Shmup Showcase: https://itch.io/jam/basic-shmup
+This game was created as a submission to the *Basic Shmup Showcase*: https://itch.io/jam/basic-shmup
 
 At the time, this was the very first application I'd ever developed. Back then, I had very little prior programming experience aside from creating small projects in the Unity game engine (C#). I started this project when I realized that Unity and its physics engine really spoiled me, and as a result, I approached every programming challenge in terms of Unity's physics engine... which is a very narrow and self-limiting way to program.
 
