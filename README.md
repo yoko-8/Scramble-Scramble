@@ -1,19 +1,21 @@
 # Scramble-Scramble
 This is the codebase for Scramble, Scramble!! a videogame programmed in Lua for the Pico-8 game engine.
 
+![me](https://github.com/yoko-8/Scramble-Scramble/blob/main/gameplay.gif)
+
 ## Usage
 Scramble, Scramble!! can be played in browser here: https://yoko8.itch.io/scramble-scramble
 
 Alternatively, download the Pico-8 cart (.png) and load it into the Pico-8 engine.
 
 ## Controls
-\* Arrow Keys to move
+* Arrow Keys to move
 
-\* Press X to shoot bullets
+* Press X to shoot bullets
 
-\* Release X to reload bullets
+* Release X to reload bullets
 
-\* Press Z to throw the Iron Egg
+* Press Z to throw the Iron Egg
 
 ## Project Description
 This game was created as a submission to the Basic Shmup Showcase: https://itch.io/jam/basic-shmup
