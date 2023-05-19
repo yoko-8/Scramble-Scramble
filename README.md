@@ -1,8 +1,6 @@
 # Scramble-Scramble
 This is the codebase for Scramble, Scramble!! a videogame programmed in Lua for the Pico-8 game engine.
 
-![UuGmYY](https://github.com/yoko-8/Scramble-Scramble/assets/106457612/7fa0fac5-6183-4ed2-8a40-e3ab03925035)
-
 ## Usage
 Scramble, Scramble!! can be played in browser here: https://yoko8.itch.io/scramble-scramble
 
