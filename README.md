@@ -4,7 +4,9 @@ This is the codebase for *Scramble, Scramble!!* a videogame programmed in Lua fo
 ![scramble-gif](https://github.com/yoko-8/Scramble-Scramble/blob/main/gameplay.gif)
 
 ## Usage
-*Scramble, Scramble!!* can be played in browser here: https://yoko8.itch.io/scramble-scramble
+*Scramble, Scramble!!* can be played in browser here:
+
+[![Available on itch.io](http://jessemillar.github.io/available-on-itchio-badge/badge-bw.png)](https://yoko8.itch.io/scramble-scramble)
 
 Alternatively, download the Pico-8 cart (.png) and load it into the Pico-8 engine.
 
