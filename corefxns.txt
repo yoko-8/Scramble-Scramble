@@ -1,0 +1,100 @@
+--scramble, scramble!! v1.4
+--by yoko8 / @fox_in_mask
+
+--core fxns
+function _init()
+	cls()
+	start_t=0
+	music(0)
+
+	--ship anim for intro screen
+	animship={}
+ 	local introship=sprmakr()
+	introship.spr=240
+	introship.x=104
+	introship.y=94
+	introship.sprw=2
+	introship.sprh=1
+	introship.ani={240,242,244,246,248,250,252}
+	introship.anispd=0.05
+	add(animship,introship)
+
+	--ball anim for intro screen
+	animball={}
+	local introball=sprmakr()
+	introball.spr=215
+	introball.x=60
+	introball.y=50
+	introball.colw=11
+	introball.colh=11
+	introball.sprw=2
+	introball.sprh=2
+	anim1=true
+	anim2=false
+	anim3=false
+	anim4=false
+	anim5=false
+	anim6=false
+	add(animball,introball)
+	--buls anim for intro screen
+	animbuls={}
+	local introbuls=sprmakr()
+	introbuls.spr=192
+	introbuls.x=106
+	introbuls.y=94
+	introbuls.colw=8
+	introbuls.colh=8
+	introbuls.sprw=1
+	introbuls.sprh=1
+	bullanim=false
+	add(animbuls,introbuls)
+	
+	--sprx anim for intro screen
+	animsprx={}
+	
+	--lines anim for intro screen
+	horiz_line={}
+	for i=1,7 do
+		local my_h_line=sprmakr()
+		my_h_line.y=i*18.3-20
+		add(horiz_line,my_h_line)
+	end
+	vert_line={}
+	for i=1,5 do
+		local my_v_line=sprmakr()
+		my_v_line.x=i*25.6-20
+		add(vert_line,my_v_line)
+	end
+
+	--switch mode	
+	mode="start"
+end
+
+function _update60()
+	if mode=="start" then
+ 	start_t+=1
+		update_start()
+	elseif mode=="wavstrt" then
+		update_wavstrt()
+	elseif mode=="game" then
+		update_game()
+	elseif mode=="gameover" then
+		update_gameover()
+	elseif mode=="gamewin" then
+		update_gamewin()
+	end
+end
+
+function _draw()
+	if mode=="start" then
+		draw_start()
+	elseif mode=="wavstrt" then
+		draw_wavstrt()
+	elseif mode=="game" then
+		draw_game()
+	elseif mode=="gameover" then
+		draw_gameover()
+	elseif mode=="gamewin" then
+		draw_gamewin()
+	end
+end
