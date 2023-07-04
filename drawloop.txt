@@ -1,0 +1,506 @@
+--draw loop
+function draw_start()
+	cls()
+
+	--draw background lines
+	draw_lines()
+	
+	--game title
+	map(24,0,8,9,14,2)
+	print("scramble,",37,12,8)
+	print("scramble!!",72,16,8)
+	
+	--credits
+	print("game by yoko8 / @fox_in_mask",0,116,7)
+	print("music by gruber / @gruber_music",0,122,7)
+
+	--animate ball on intro screen
+	for introball in all(animball) do
+		if anim1 then
+			introball.spr=215
+			introball.x-=1
+			introball.y-=1
+			bullanim=false
+			if introball.y<=25 then
+				anim1=false
+				anim2=true
+			end
+		end
+		if anim2 then
+			introball.spr=219
+			introball.x-=1
+			introball.y+=1
+			if introball.x<=0 then
+				anim2=false
+				anim3=true
+			end
+		end
+		if anim3 then
+			introball.spr=217
+			introball.x+=1
+			introball.y+=1
+			if introball.x>=36 then
+				anim3=false
+				anim4=true
+			end
+		end
+		if anim4 then
+			introball.spr=213
+			introball.x+=1
+			introball.y-=1
+			if introball.y<=25 then
+				anim4=false
+				anim5=true
+			end
+		end
+		if anim5 then
+			introball.spr=217
+			introball.x+=1
+			introball.y+=1
+			if introball.x>=117 then
+				anim5=false
+				anim6=true
+			end
+		end
+		if anim6 then
+			introball.spr=219
+			introball.x-=1
+			introball.y+=1
+			if introball.x<=96 then
+				bullanim=true
+			end
+			if introball.x<=81 then
+				anim6=false
+				anim1=true
+			end
+		end
+		drwmyspr(introball)
+	end
+
+	--animate buls on intro screen
+	for introbuls in all(animbuls) do
+		if bullanim and anim6 then
+			introbuls.x-=1
+			introbuls.y-=1
+			drwmyspr(introbuls)
+		else
+			introbuls.x=106
+			introbuls.y=94
+		end
+	end
+	
+	--animate sprx on intro screen
+	for introbuls in all(animbuls) do
+		for introball in all(animball) do
+			if col(introbuls,introball) then
+				for i=1,rnd(3)+5 do
+				local introsprx={}
+				introsprx.x=83
+				introsprx.y=76
+				introsprx.dx=(rnd()-0.6)*4
+				introsprx.dy=(rnd()-0.6)*4
+				introsprx.age=rnd(3)
+				introsprx.size=rnd(1)+1
+				introsprx.maxage=15+rnd(15)
+				add(animsprx,introsprx)
+				end				
+			end
+		end
+	end
+	for introsprx in all(animsprx) do
+		local int_sprx_col=7
+			if introsprx.age>5 then
+				int_sprx_col=7
+			end
+			if introsprx.age>7 then
+				int_sprx_col=11
+			end
+			if introsprx.age>10 then
+				int_sprx_col=3
+			end
+			if introsprx.age>15 then
+				int_sprx_col=13
+			end
+			if introsprx.age>20 then
+				int_sprx_col=5
+			end
+		circfill(introsprx.x+4,
+			introsprx.y+4,introsprx.size,
+			int_sprx_col)
+		introsprx.x+=introsprx.dx
+		introsprx.y+=introsprx.dy
+		introsprx.age+=rnd(2)
+		if introsprx.age>introsprx.maxage then
+			introsprx.size-=0.5
+			if introsprx.size<0 then
+				del(animsprx,introsprx)
+			end
+		end
+	end
+
+ 	--animate ship on intro screen
+	for introship in all(animship) do
+		introship.aniframe+=introship.anispd
+ 	if flr(introship.aniframe)>#introship.ani then
+  		introship.aniframe=1
+ 	end
+ 	introship.spr=introship.ani[flr(introship.aniframe)]
+		drwmyspr(introship)
+	end
+
+--flashing start text
+local start_col
+	if sin(start_t/30)<-0.5 then
+ 		start_col=7
+	elseif sin(start_t/30)<=0.5
+ 	and sin(start_t/30)>=-0.5 then
+ 		start_col=3
+	elseif sin(start_t/30)>0.5 then
+ 		start_col=11
+	end
+	print("press x+⬆️ to start",27,106,start_col)
+end
+
+function draw_lines()
+	--draw horiz lines
+	for my_h_line in all(horiz_line) do
+		line(0,my_h_line.y,128,my_h_line.y,1)
+			my_h_line.y+=0.5
+		if my_h_line.y>128 then
+			del(horiz_line,my_h_line)
+			gen_h_line()
+		end
+	end
+	--draw vert lines
+	for my_v_line in all(vert_line) do
+		line(my_v_line.x,0,my_v_line.x,128,1)
+		if mode=="start" then
+			my_v_line.x+=0.5
+		end
+		if mode=="game" then
+			if btn(0) then
+				my_v_line.x+=0.5
+			end
+			if btn(1) then
+				my_v_line.x-=0.5
+			end
+		end
+		if my_v_line.x>128 then
+			del(vert_line,my_v_line)
+			gen_v_line_l()
+		end
+		if my_v_line.x<0 then
+			del(vert_line,my_v_line)
+			gen_v_line_r()
+		end
+	end
+end
+
+function draw_game()
+	cls()
+	
+	draw_lines()
+	
+	--slow stars
+	for i=1,#slowstars do
+		local mysstar=slowstars[i]
+		local mysstarcol=6
+		if mysstar.spd<0.5 then
+			mysstarcol=1
+		elseif mysstar.spd>=0.5 and
+		mysstar.spd<1 then
+			mysstarcol=5
+		end
+		pset(mysstar.x,mysstar.y,mysstarcol)
+		mysstar.y+=mysstar.spd
+		if mysstar.y>=136 then
+			del(slowstars,mysstar)
+			gen_sstar()
+		end
+	end
+
+	--background
+	--rock belt
+	map(8,0,0,scrol2,16,32)
+	scrol2+=0.025
+	if scrol2>130 then
+		scrol2=-235
+	end
+	--enterblathnir
+	if wave>=1 and scrol1<130 then
+		map(0,0,32,scrol1,8,8)
+		scrol1+=0.25
+	end
+		
+	--drawing sprx
+	for mysprx in all(sprx) do
+		local sprx_col=7
+		if mysprx.grn then
+		--green sprx
+			if mysprx.age>5 then
+				sprx_col=7
+			end
+			if mysprx.age>7 then
+				sprx_col=11
+			end
+			if mysprx.age>10 then
+				sprx_col=3
+			end
+			if mysprx.age>15 then
+				sprx_col=13
+			end
+			if mysprx.age>20 then
+				sprx_col=5
+			end
+		else
+		--enemy sprx
+			if mysprx.age>5 then
+				sprx_col=10
+			end
+			if mysprx.age>7 then
+				sprx_col=9
+			end
+			if mysprx.age>10 then
+				sprx_col=8
+			end
+			if mysprx.age>15 then
+				sprx_col=2
+			end
+			if mysprx.age>20 then
+				sprx_col=5
+			end
+		end
+			circfill(mysprx.x+4,
+			mysprx.y+4,mysprx.size,
+			sprx_col)
+			mysprx.x+=mysprx.dx
+			mysprx.y+=mysprx.dy
+			mysprx.age+=rnd(2)
+		if mysprx.age>mysprx.maxage then
+			mysprx.size-=0.5
+			if mysprx.size<0 then
+				del(sprx,mysprx)
+			end
+		end
+	end
+
+	--drawing shkwav
+	for mysw in all(shkwav) do
+		if mysw.r<mysw.maxr then
+			mysw.r+=2
+		end
+		if mysw.r>=mysw.maxr then
+			del(shkwav,mysw)
+		end
+		if mysw.wavw==4 then
+			circ(mysw.x+15,mysw.y+9,
+			mysw.r,13)
+		elseif mysw.wavw==2 then
+			circ(mysw.x+7,mysw.y+7,
+			mysw.r,13)
+		else
+			circ(mysw.x+4,mysw.y+4,
+			mysw.r,13)
+		end
+	end
+
+	--drawing explosns
+	for myp in all(parts) do
+		local p_col=7
+		if myp.blue then
+		--ship explosn
+			if myp.age>5 then
+				p_col=6
+			end
+			if myp.age>7 then
+				p_col=12
+			end
+			if myp.age>10 then
+				p_col=4
+			end
+			if myp.age>15 then
+				p_col=13
+			end
+			if myp.age>25 then
+				p_col=1
+			end
+		else
+		--enemy explosn
+			if myp.age>5 then
+				p_col=10
+			end
+			if myp.age>7 then
+				p_col=9
+			end
+			if myp.age>10 then
+				p_col=8
+			end
+			if myp.age>15 then
+				p_col=2
+			end
+			if myp.age>25 then
+				p_col=13
+			end
+		end
+		circfill(myp.x+4,myp.y+4,
+		myp.size,p_col)
+		myp.x+=myp.dx
+		myp.y+=myp.dy
+		myp.dx=myp.dx*0.93
+		myp.dy=myp.dy*0.93
+		myp.age+=rnd(2)
+		if myp.age>myp.maxage then
+			myp.size-=0.5
+			if myp.size<0 then
+				del(parts,myp)
+			end
+		end
+	end
+	
+	--draw brix
+	for mybrix in all(brix) do
+		if mybrix.flash>0 then
+			mybrix.flash-=1
+			for i=1,15 do
+				pal(i,7)
+			end
+		end
+		drwmyspr(mybrix)
+		pal()
+	end
+	
+	--draw enemies and
+	--draw enemies flashing
+	for myen in all(enemies) do
+	--enemy flash on hit
+		if myen.flash>0 then
+			myen.flash-=1
+			for i=1,15 do
+				pal(i,7)
+			end
+		end
+		--enemy flash before atk
+		if myen.preatk>0 then
+			myen.preatk-=1
+			for i=1,15 do
+				pal(i,8)
+			end
+		end
+		drwmyspr(myen)
+		pal()
+	end
+	
+	--ball
+	drwmyspr(ball)
+
+	--draw bullet
+	for mybul in all(buls) do
+		drwmyspr(mybul)
+	end
+
+	--draw ship
+	--ship+exhaust
+	if not invul then
+		drwmyspr(ship)
+		drwmyspr(jet)
+	else
+	--invul state
+		if sin(t/7)<0 then
+			drwmyspr(ship)
+			drwmyspr(jet)
+		end
+	end	
+	
+	--draw enemy bullet
+	for myebul in all(ebuls) do
+		drwmyspr(myebul)
+	end
+
+
+	--fast stars
+	for i=1,#faststars do
+		local myfstar=faststars[i]
+		
+		pset(myfstar.x,myfstar.y,7)
+		myfstar.y+=myfstar.spd
+		
+		if myfstar.y>=136 then
+			del(faststars,myfstar)
+			gen_fstar()
+		end
+	end
+		
+	--extra lives
+	for ex_life in all(one_ups) do
+		drwmyspr(ex_life)
+	end
+
+
+	--draw ui at top
+	rectfill(0,0,128,6,0)
+	
+	--print lives
+ 	print(" "..lives,82,1,7)
+ 	spr(194,77,0)
+ 
+ 	--ammo indicator
+	for i=1,ammo do
+		spr(15,94+(i*5),0.5)
+	end
+
+	--score counter
+	print("score:"..points,1,1,7)
+end
+
+function draw_wavstrt()
+	draw_game()
+	if wave<16 then
+		print("wave "..wave,51,72,8)
+		--flashing text for bonus points
+		if wave==1 then
+		 rectfill(31,50,93,68,8)
+			rectfill(33,52,91,66,0)
+			print("x to shoot",43,54,7)
+			print("z to throw egg",35,60,7)
+		end
+		if wave==14 then
+			print("dedicated to my mom",27,63,7)
+		end
+		
+		if wave>1 and lifelost==false then
+			local bonus_col=8
+			if sin(t/10)<0 then
+				bonus_col=6
+			else
+				bonus_col=8
+			end
+			print("no damage bonus!",
+			31,78,bonus_col)
+		end
+	end
+end
+
+function draw_gameover()
+	rectfill(0,60,128,80,0)
+	print("game over",46,62,7)
+	print("press x+⬆️ to continue",20,68,6)
+	print("press z+⬇️ to restart",22,74,6)
+end
+
+
+function draw_gamewin()
+	rectfill(19,19,109,69,1)
+	rectfill(21,21,107,67,0)
+	print("you've defeated",23,24,7)
+	print("the gear empire!",23,30,7)
+	print("retries:"..retries,23,42,8)
+	print("end score:"..points,23,48,8)
+	print("total score:"..tot_points,23,54,8)
+	print("press z+⬇️ to restart",23,60,11)
+end
+
+
+function drwmyspr(myspr)
+	spr(myspr.spr,myspr.x,myspr.y,
+	myspr.sprw,myspr.sprh)
+end

@@ -1,0 +1,439 @@
+--enemy+waves data
+function spawn_wave()
+	--higher atkfrq->less atks
+	if wave==1 then
+		music(7)
+		atkfrq=150
+		place_wave({
+			{1,1,0,0,1,1,0,0,1,1},
+			{1,1,0,0,1,1,0,0,1,1},
+			{1,1,0,0,1,1,0,0,1,1},
+			{1,1,0,0,1,1,0,0,1,1}
+		})
+	elseif wave==2 then
+		atkfrq=120
+		place_wave({
+			{1,1,2,2,2,2,2,2,1,1},
+			{1,1,2,2,2,2,2,2,1,1},
+			{1,1,2,2,2,2,2,2,1,1},
+			{1,1,0,0,0,0,0,0,1,1}
+	})
+	elseif wave==3 then
+		atkfrq=120
+		place_wave({
+			{1,0,0,2,2,2,2,0,0,1},
+			{1,0,0,2,2,2,2,0,0,1},
+			{1,0,0,0,0,0,0,0,0,1},
+			{1,0,0,0,0,0,0,0,0,1}
+	})
+	elseif wave==4 then
+		atkfrq=30
+		place_wave({
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,3,0,0,0,0,3,0,0},
+			{0,0,0,0,0,0,0,0,0,0}
+	})
+	elseif wave==5 then
+		atkfrq=90
+		place_wave({
+			{2,3,2,2,3,2,2,3,2,2},
+			{0,0,0,2,3,2,2,3,2,2},
+			{0,0,0,0,0,2,2,3,2,2},
+			{0,0,0,0,0,0,0,0,2,2}
+	})
+	elseif wave==6 then
+		music(32)
+		atkfrq=90
+		place_wave({
+			{3,0,0,0,2,2,0,0,0,3},
+			{3,6,0,0,2,2,0,6,0,3},
+			{1,0,0,0,2,2,0,0,0,1},
+			{1,1,1,1,2,2,1,1,1,1}
+	})
+	elseif wave==7 then
+		atkfrq=90
+		place_wave({
+			{3,3,3,3,3,3,3,3,3,3},
+			{0,2,2,2,2,2,2,2,2,0},
+			{0,0,2,2,2,2,2,2,0,0},
+			{0,0,0,4,4,4,4,0,0,0}
+	})
+	elseif wave==8 then
+		atkfrq=90
+		place_wave({
+			{4,2,0,0,5,0,0,0,2,4},
+			{4,1,0,0,0,0,0,0,1,4},
+			{4,1,0,0,3,3,0,0,1,4},
+			{4,0,0,0,2,2,0,0,0,4}
+	})
+	elseif wave==9 then
+		atkfrq=60
+		place_wave({
+			{3,2,0,0,0,0,0,0,2,3},
+			{3,0,0,0,5,0,0,0,0,3},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0}
+	})
+	elseif wave==10 then
+		atkfrq=90
+		place_wave({
+			{0,0,0,3,6,0,3,0,0,0},
+			{0,0,0,3,0,0,3,0,0,0},
+			{4,0,0,0,0,0,0,0,0,4},
+			{4,4,0,0,0,0,0,0,4,4}
+	})
+	elseif wave==11 then
+		music(25)
+		atkfrq=90
+		place_wave({
+			{4,5,0,2,2,2,2,5,0,4},
+			{4,0,0,2,2,2,2,0,0,4},
+			{4,0,0,0,0,0,0,0,0,4},
+			{0,0,0,0,0,0,0,0,0,0}
+	})
+	elseif wave==12 then
+		atkfrq=60
+		place_wave({
+			{0,0,0,0,0,3,5,0,6,0},
+			{0,0,0,0,0,3,0,0,0,0},
+			{0,0,0,0,0,3,3,3,3,3},
+			{0,0,0,0,0,0,0,0,0,0}
+	})
+	elseif wave==13 then
+		atkfrq=60
+		place_wave({
+			{3,3,0,0,3,3,0,0,3,3},
+			{4,4,0,0,6,0,0,0,4,4},
+			{5,0,0,0,0,0,0,0,5,0},
+			{0,0,0,0,0,0,0,0,0,0}
+	})
+	elseif wave==14 then
+		music(0)
+		atkfrq=60
+		place_wave({
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,6,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0}
+	})
+	elseif wave==15 then
+		music(15)
+		atkfrq=60
+		place_wave({
+			{0,0,0,7,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0}
+		})
+	end
+	if wave<16 then
+		sfx(10)
+	end
+	if wave==16 then
+		music(-1)
+		sfx(14)
+	end
+end
+
+function place_wave(lv)
+	for y=1,4 do
+		local myline=lv[y]
+		for x=1,10 do
+			if myline[x]!=0 then
+				spawn_en(myline[x],
+				x*10+6,y*9,x*6)
+			end
+		end
+	end
+end
+
+
+function spawn_en(entype,
+enx,eny,enwait)
+	local myen=sprmakr()
+	myen.type=entype
+	myen.x=enx*2-64
+	myen.y=eny-60
+	myen.timr=0
+	myen.anispd=0.1
+	myen.wait=enwait
+	
+	--final x/y pos for enemies
+	myen.finlx=enx
+	myen.finly=eny
+	
+	myen.status="summon"
+	
+	if entype==nil or entype==1 then
+		--grn gadget
+		myen.spr=16
+		myen.ani={16,17}
+		myen.hp=2
+	elseif entype==2 then
+		--ylw gadget
+		myen.spr=18
+		myen.ani={18,19}
+		myen.hp=1
+	elseif entype==3 then
+		--red gadget
+		myen.spr=20
+		myen.ani={20,21}
+		myen.hp=5
+	elseif entype==4 then
+		--"sleeper" gadget
+		myen.spr=22
+		myen.ani={22,23}
+		myen.hp=8
+	elseif entype==5 then
+		--powerhold!
+		--the moving!! battery!!
+		myen.spr=32
+		myen.ani={32,34,36,38}
+		myen.hp=20
+		myen.sprw=2
+		myen.sprh=2
+		myen.colw=16
+		myen.colh=16
+	elseif entype==6 then
+		--metahlhold!
+		--the moving!! blockade?!
+		myen.spr=40
+		myen.ani={40,42,44,46}
+		myen.hp=25
+		myen.sprw=2
+		myen.sprh=2
+		myen.colw=16
+		myen.colh=16
+	elseif entype==7 then
+		--gadjiltron!!!
+		myen.spr=128
+		myen.anispd=0.05
+		myen.ani={128,132,136,140}
+		myen.hp=80
+		myen.sprw=4
+		myen.sprh=4
+		myen.colw=32
+		myen.colh=32
+	end
+	add(enemies,myen)
+end
+
+
+--enemy core fxns
+function move_en()
+	for myen in all(enemies) do
+		--enemy modes
+		status_en(myen)
+		
+		--change sprite
+		myen.aniframe+=myen.anispd
+ 		if flr(myen.aniframe)>#myen.ani then
+ 			myen.aniframe=1
+		end
+ 		myen.spr=myen.ani[flr(myen.aniframe)]
+
+		--del offscrn en
+		if myen.status!="summon" then
+			if myen.y>128
+			or myen.x<-8
+			or myen.x>136 then
+				del(enemies,myen)
+			end
+		end
+	end
+end
+
+function status_en(myen)
+	--halt enemy ai
+	if myen.wait>0 then
+		myen.wait-=1
+		if t%7==0 then
+			myen.preatk=3
+		end
+		return
+	end
+	
+	if myen.status=="summon" then
+		--enemy eases in to scrn
+		myen.x+=(myen.finlx-myen.x)/6		
+		myen.y+=(myen.finly-myen.y)/6
+		--if enemy close enuf to
+		--finl pos, switch mode
+		if myen.y>=myen.finly-1 then
+			myen.status="def"
+		end
+	elseif myen.status=="def" then
+		--enemy sways l/r
+		local l_drift=true
+		if sin(t/100)>0 then
+			l_drift=true
+		else
+			l_drift=false
+		end
+		if l_drift then
+			myen.x+=0.03
+		else
+			myen.x-=0.03
+		end
+		move(myen)
+
+	elseif myen.status=="atk" then	
+	--grn gadget
+		if myen.type==1 then
+			--rush recklessly (slow)
+			myen.dy=0.5
+			myen.dx=sin(t/50)
+			if myen.x<24 then
+				myen.dx+=0.5
+			end
+			if myen.x>104 then
+				myen.dx-=0.5
+			end
+
+	--ylw gadget
+		elseif myen.type==2 then
+			--throw ebul
+			en_shot(myen,0,1)
+			--then return to def
+			myen.status="def"
+
+	--red gadget		  
+		elseif myen.type==3 then
+			--throw homing ebul
+			aimfire(myen,1)
+			--then return to def
+			myen.status="def"
+	
+	--sleeper gadget
+		elseif myen.type==4 then
+			if myen.hp>=3 then
+				--throw fast homing ebul
+				aimfire(myen,1)
+				--then return to def
+				myen.status="def"
+			else
+				if myen.dx==0 then
+					myen.dy=0.5
+					if ship.y<=myen.y then
+						myen.dy=0
+						if ship.x<myen.x then
+							myen.dx=-0.5
+						else
+							myen.dx=0.5
+						end
+					end
+				end
+			end
+
+	--powerhold
+		elseif myen.type==5 then
+			en_spred(myen,rnd(1),1)
+			myen.status="def"
+
+	--metalhold
+		elseif myen.type==6 then
+			aimfire(myen,0.9)
+			aimfire(myen,1)
+			aimfire(myen,1.1)
+			myen.status="def"
+
+	--gadjiltron
+		elseif myen.type==7 then
+			if myen.hp>=40 then
+				if #brix<=5 then
+					for mybrix in all(brix) do
+						del(brix,mybrix)
+					end
+					laybrix({
+						{0,0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0,0},
+						{1,0,0,0,0,0,0,0,0,1},
+						{1,1,1,1,1,1,1,1,1,1},
+						{0,1,1,1,1,1,1,1,1,0},
+						{0,0,0,0,0,0,0,0,0,0}
+					})
+				end
+				if #enemies==1 then
+					place_wave({
+						{1,0,0,0,0,0,0,0,0,1},
+						{1,1,0,0,0,0,0,0,1,1},
+						{0,1,1,0,0,0,0,1,1,0},
+						{0,0,1,0,0,0,0,1,0,0}
+					})
+				else
+					aimfire(myen,0.75)
+					aimfire(myen,1)
+					aimfire(myen,1.25)
+				end
+			elseif myen.hp<40 then
+				if #brix<=8 then
+					for mybrix in all(brix) do
+						del(brix,mybrix)
+					end
+					laybrix({
+						{3,0,0,0,0,0,0,0,0,3},
+						{3,0,0,0,0,0,0,0,0,3},
+						{3,0,0,0,0,0,0,0,0,3},
+						{3,0,0,0,0,0,0,0,0,3},
+						{3,0,0,0,0,0,0,0,0,3},
+						{0,3,3,3,3,3,3,3,3,0},
+						{0,0,3,3,3,3,3,3,0,0},
+						{0,0,0,0,0,0,0,0,0,0}
+					})
+				end
+				if #enemies==1 then
+					place_wave({
+						{0,0,3,0,0,0,0,3,0,0},
+						{0,0,3,0,0,0,0,3,0,0},
+						{0,0,3,0,0,0,0,3,0,0},
+						{0,0,0,0,0,0,0,0,0,0}
+					})
+				else
+					en_spred(myen,rnd(1),1)
+					en_spred(myen,rnd(1),0.5)
+				end
+						
+			end
+			myen.status="def"
+		end
+	move(myen)
+	end
+end
+
+--enemy behavior
+function atkmode()
+	if mode !="game" then
+		return
+	end
+
+	local secs=flr(t)%atkfrq
+
+	if	secs==0 and #enemies>0 then
+		
+		--min will always give
+		--whichever num is smaller
+		local maxen=min(12,#enemies)
+		--gives us number of one
+		--of 12 final ens in array
+		local myindex=flr(rnd(maxen))
+		myindex=#enemies-myindex
+		--rndly picks from array
+		--to switch 1 en to atk
+		local myen=enemies[myindex]
+		if myen.status=="def" then
+			myen.status="atk"
+			myen.wait=60
+		else
+			return
+		end
+	end
+	
+end
+
+function move(obj)
+	obj.x+=obj.dx
+	obj.y+=obj.dy
+end

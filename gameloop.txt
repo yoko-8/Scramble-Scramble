@@ -1,0 +1,217 @@
+--game loop
+
+function update_start()
+ if btn(2) and btn(5) then
+ 	startgame()
+ end
+end
+
+function startgame()
+	mode="wavstrt"
+	sticky=true
+	shot=false
+	lives=3
+	lifelost=false
+	invul=false
+	t=0
+	points=0
+	tot_points=0
+	retries=0
+	wave=1
+	wavt=150
+	canshot=false
+	one_ups={}
+	
+	--ship var
+	ship=sprmakr()
+	ship.spr=1
+	ship.x=59
+	ship.y=105
+	ship.dx=0
+	ship.dy=0
+	invul=false
+	respawning=false
+	jet=sprmakr()
+	jet.spr=4
+	jet.spd=0.3
+	jet.x=59
+	jet.y=113
+	jet.sprw=1
+	jet.sprh=1
+	
+	--ball var
+	ball=sprmakr()
+	sticky=true
+	ball.spr=8
+	ball.x=59
+	ball.y=105
+	ball.r=4
+	ball.dx=1
+	ball.dy=-1
+
+	--bullet var
+	buls={}
+	bultimer=0
+	ammo=6
+	rlodt=false
+	reloaded=false
+	rlodtimer=0
+	
+	--enemy var
+	enemies={}
+	ebuls={}
+	spawn=false
+	atkfrq=60
+	
+	--explosns
+	parts={}
+	sprx={}
+	shkwav={}
+	exlcol={}
+	
+	--bricks
+	brix={}
+	
+	--background
+	scrol1=60
+	scrol2=-235
+	
+	--stars
+	slowstars={}
+	for i=1,20 do
+		local sstar={}
+		sstar.x=rnd(128)
+		sstar.y=rnd(128)
+		sstar.spd=rnd(1.5)
+		add(slowstars,sstar)
+	end
+	faststars={}
+	for i=1,10 do
+		local fstar={}
+		fstar.x=rnd(128)
+		fstar.y=rnd(128)
+		fstar.spd=rnd(2)+1
+		add(faststars,fstar)
+	end
+end
+
+function update_game()
+	--player controls
+	ship_ctrl()
+	stickyball()
+	shooting()
+
+	--enemy fxns
+	move_en()
+	atkmode()
+	en_shooting()
+	
+	--brix
+	brix_master()
+
+	--collision master
+	lotsa_cols()
+
+	--overall game timer
+	t+=1
+	
+	--extra lives
+	lifedrops()
+
+	--if no enemy,
+	--spawn next wave
+	if mode=="game" and #enemies==0 then
+		nextwave()
+		spawn=false
+		--delete leftover brix
+		for mybrix in all(brix) do
+			del(brix,mybrix)
+		end
+	end
+	
+	--lose game if no lives
+	if lives < 0 then
+			gameover()
+	end
+		
+	--track if x is pressd
+	if btn(5)==false then
+ 	x_up=true
+ 	elseif btn(5)==true then
+ 	x_up=false
+ end
+ 
+ 	if respawning==true then
+ 		if ship.y>95 then
+ 			ship.y-=0.3
+ 		else
+ 			respawning=false
+ 		end
+	end
+	if respawning==false then
+ 		invul=false
+	end
+end
+
+function update_wavstrt()
+	update_game()
+	
+	wavt-=1
+	if spawn==false then
+		spawn_wave()
+		spawn_brix()
+		spawn=true
+	end
+	
+	if wavt<=0 then
+		mode="game"
+		canshot=true
+		if lifelost==false
+		and wave>1
+		and wave<16 then
+		 points+=500
+		 tot_points+=500
+		else
+			lifelost=false
+		end
+	end
+end
+
+function nextwave()
+	wave+=1
+	
+	canshot=false
+	if wave>16 then
+	 mode="gamewin"
+	else
+		mode="wavstrt"
+		wavt=90
+	end
+end
+
+function gameover()
+	mode="gameover"
+end
+
+function update_gameover()
+	if btn(2) and btn(5) then
+		respawn()
+		lives=3
+		points=0
+		retries+=1
+		scrol1=60
+		mode="game"
+	end
+
+	if btn(3) and btn(4) then
+		mode="start"
+ 		music(0)
+	end
+end
+
+function update_gamewin()
+	if btn(3) and btn(4) then
+ 		mode="start"
+ 		music(0)
+	end
+end

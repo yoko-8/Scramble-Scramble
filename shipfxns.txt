@@ -1,0 +1,76 @@
+--ship fxns
+function ship_ctrl()
+	local butnpresx=false
+	local butnpresy=false
+
+	if btn(0) then
+		ship.spr=2
+		--ship go l
+		ship.dx=-1.5
+		butnpresx=true
+	end
+	if btn(1) then
+		ship.spr=3
+		--ship go r
+		ship.dx=1.5
+		butnpresx=true
+	end
+
+	if not respawning then
+		if btn(2) then
+			--ship go up
+			ship.dy=-1.5
+			butnpresy=true
+			jet.spd=0.5
+		end
+		if btn(3) then
+			--ship go dwn
+			ship.dy=1.5
+			butnpresy=true
+			jet.spd=0.2
+		end
+	end
+	
+	if not (butnpresx) then
+		ship.spr=1
+		ship.dx=0
+	end
+	if not (butnpresy) then
+		jet.spd=0.3
+		ship.dy=0
+	end
+	
+	--fix ship pos
+	ship.x=mid(6,ship.x,116)
+	ship.y=mid(24,ship.y,120)
+	
+	--move ship pos
+	ship.x+=ship.dx
+	ship.y+=ship.dy
+	
+	--exhaust anims
+	jet.x=ship.x
+	jet.y=ship.y+8
+	jet.spr+=jet.spd
+	if jet.spr>6.6 then
+		jet.spr=4
+	end
+end
+
+function respawn()
+	if respawning==false
+	and invul==false
+	and mode=="game" then
+		sfx(2)
+		lives-=1
+		explode(ship.x,ship.y,true)
+		sticky=true
+		invul=true
+		ship.x=59
+		ship.y=125
+		ball.x=59
+		ball.y=125
+		respawning=true
+		lifelost=true
+	end
+end

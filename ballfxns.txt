@@ -1,0 +1,85 @@
+--ball fxns
+function stickyball()
+	--ball spr set
+	if ball.dx>0 and ball.dy<0 then
+		ball.spr=8
+	end
+	if ball.dx>0 and ball.dy>0 then
+		ball.spr=10
+	end
+	if ball.dx<0 and ball.dy<0 then
+		ball.spr=9
+	end
+	if ball.dx<0 and ball.dy>0 then
+		ball.spr=11
+	end
+
+	--set ball x/y range
+	ball.x=mid(4,ball.x,118)
+	ball.y=mid(10,ball.y,140)
+
+
+	if sticky then
+		--centers ball above ship
+		ball.x=ship.x
+		ball.y=ship.y-9
+		ball.dy=-1
+		if ship.dx>0 then
+			ball.dx=1
+		end
+		if ship.dx<0 then
+			ball.dx=-1
+		end
+		
+	end
+	
+	--shoots ball
+	if btnp(4) and sticky
+	and canshot 
+	and not respawning then
+		--ball released same dxn
+		--as ship
+		if ship.dx>0 then
+			ball.dx=1
+		end
+		if ship.dx<0 then
+			ball.dx=-1
+		end
+		sticky=false
+	end
+	
+	--if not sticky, ball moves
+	if not sticky
+	and mode=="game" then
+		ball.x+=ball.dx
+		ball.y+=ball.dy
+	end
+	
+	if mode=="wavstrt" then
+		ball.x+=(ship.x-ball.x)/2
+		ball.y+=(ship.y-9-ball.y)/2
+		
+		if abs(ship.x-ball.x)<0.5
+		and abs(ship.y-9-ball.y)<0.5 then
+			ball.x=ship.x
+			ball.y=ship.y-9
+			sticky=true
+		end
+		
+	end
+	
+	--ball/wall check
+	if ball.x > 118 or 
+		ball.x < 4 then
+		ball.dx=-ball.dx
+		sfx(0)
+	end
+	if ball.y < 10 then 
+		ball.dy=-ball.dy
+		sfx(0)
+	end
+	if ball.y > 130 then
+		respawn()
+		sfx(2)
+	end
+end

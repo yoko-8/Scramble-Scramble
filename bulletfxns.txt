@@ -1,0 +1,97 @@
+--bullet fxns
+function shooting()
+	--shoot buls
+	if btn(5)
+	and canshot
+	and not sticky
+	and not respawning
+	and ammo>0
+	and bultimer<=0 then
+		local newbul=sprmakr()
+		newbul.spr=7
+		newbul.x=ship.x+2
+		newbul.y=ship.y
+		newbul.colw=4
+		newbul.colh=7
+		add(buls,newbul)
+		--decrease ammo per buls
+		ammo-=1
+		sfx(9)
+		--how fast u can spam buls
+		bultimer=10
+	end
+ 
+	bultimer-=1
+
+	--reload buls
+	local bulsecs=flr(t)%60
+	if ammo<6 then
+		--if hold x, bad reload speed
+		if  bulsecs==0
+		and ammo==0
+		and not x_up then
+			ammo+=1
+		--if not hold x, rapid reload
+		elseif x_up then
+			rlodt=true
+		end
+	end
+	--rapid reload script
+	if rlodt==true then
+		rlodtimer+=1
+		if rlodtimer>75
+		and ammo<6 then
+			reloaded=true
+		end
+	end
+	if reloaded==true then
+		if x_up then
+			ammo+=1
+		end
+		if ammo>=6 then
+			sfx(7)
+			rlodt=false
+			rlodtimer=0
+			reloaded=false
+		end
+	end
+	--max ammo always 6
+	if ammo>6 then
+		ammo=6
+	end
+	
+	for i=#buls,1,-1 do
+		local mybul=buls[i]
+		--moves buls up
+		mybul.y-=2
+		--delete offscreen buls		
+		if mybul.y<0 then
+			del(buls,mybul)
+		end
+	end
+end
+
+--enemy buls
+function en_shooting()
+	for myebul in all(ebuls) do
+		--make ebul flicker
+		myebul.aniframe+=myebul.anispd
+ 		if flr(myebul.aniframe)>#myebul.ani then
+  			myebul.aniframe=1
+ 		end
+
+		myebul.spr=myebul.ani[flr(myebul.aniframe)]
+
+		--move ebul
+		myebul.x+=myebul.dx
+		myebul.y+=myebul.dy
+	
+		--del offscrn ebuls
+		if myebul.y>136
+		or myebul.y<-8
+		or myebul.x<-8
+		or myebul.x>136 then
+			del(ebuls,myebul)
+		end
+	end
+end
